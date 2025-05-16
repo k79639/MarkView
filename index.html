@@ -13,6 +13,7 @@
     <div class="min-h-screen flex flex-col">
         <header class="py-4 px-6 border-b" style="border-color: var(--border-color); background-color: var(--bg-secondary);">
             <div class="flex justify-between items-center">
+                <!-- Title -->
                 <h1 class="text-2xl font-bold flex items-center">
                     <i class="fa-brands fa-markdown mr-2" style="color: var(--accent-color);"></i>
                     MARKVIEW
@@ -41,6 +42,19 @@
                             </button>
                         </div>
                     </div>
+                
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-2">
+                        <button id="download-btn" class="px-3 py-1 rounded flex items-center text-sm" style="background-color: var(--accent-color); color: white;">
+                            <i class="fas fa-download mr-1"></i>
+                            <span class="hidden md:inline">Download</span>
+                        </button>
+                        <button id="clear-btn" class="px-3 py-1 rounded flex items-center text-sm" style="border: 1px solid var(--border-color);">
+                            <i class="fas fa-trash-alt mr-1"></i>
+                            <span class="hidden md:inline">Clear</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </header>
     </div>
