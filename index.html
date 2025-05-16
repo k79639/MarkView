@@ -9,7 +9,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    
+<body class="theme-minimal transition-all" style="background-color: var(--bg-primary); color: var(--text-primary);">
+    <div class="min-h-screen flex flex-col">
+        <header class="py-4 px-6 border-b" style="border-color: var(--border-color); background-color: var(--bg-secondary);">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold flex items-center">
+                    <i class="fa-brands fa-markdown mr-2" style="color: var(--accent-color);"></i>
+                    MARKVIEW
+                </h1>
+
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Selectors -->
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm hidden md:inline" style="color: var(--text-secondary);">Themes:</span>
+                        <div class="flex space-x-6">
+                            <button class="tooltip theme-btn" data-theme="neon">
+                                <i class="fas fa-laptop-code text-lg"></i>
+                                <span class="tooltip-text">Neon Hacker</span>
+                            </button>
+                            <button class="tooltip theme-btn" data-theme="minimal">
+                                <i class="fas fa-moon text-lg"></i>
+                                <span class="tooltip-text">Minimal Dark</span>
+                            </button>
+                            <button class="tooltip theme-btn" data-theme="funny">
+                                <i class="fas fa-paint-brush text-lg"></i>
+                                <span class="tooltip-text">Funny Chaotic</span>
+                            </button>
+                            <button class="tooltip theme-btn" data-theme="light">
+                                <i class="fas fa-sun text-lg"></i>
+                                <span class="tooltip-text">Soft Light</span>
+                            </button>
+                        </div>
+                    </div>
+            </div>
+        </header>
+    </div>
 </body>
 </html>
