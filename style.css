@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Comic+Neue:wght@700&display=swap');
+
+/* Transition effects */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+/* Themes */
+.theme-neon {
+    --bg-primary: #000;
+    --bg-secondary: #111;
+    --text-primary: #0f0;
+    --text-secondary: #0a0;
+    --border-color: #0a0;
+    --accent-color: #0f0;
+    --editor-bg: #000;
+    --preview-bg: #111;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.theme-minimal {
+    --bg-primary: #111;
+    --bg-secondary: #222;
+    --text-primary: #fff;
+    --text-secondary: #ccc;
+    --border-color: #444;
+    --accent-color: #4f46e5;
+    --editor-bg: #111;
+    --preview-bg: #222;
+    font-family: 'Inter', sans-serif;
+}
+
+.theme-funny {
+    --bg-primary: #ffeb3b;
+    --bg-secondary: #ffc107;
+    --text-primary: #9c27b0;
+    --text-secondary: #673ab7;
+    --border-color: #e91e63;
+    --accent-color: #e91e63;
+    --editor-bg: #ffeb3b;
+    --preview-bg: #ffc107;
+    font-family: 'Comic Neue', cursive;
+}
+
+.theme-light {
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #fff;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --border-color: #ddd;
+    --accent-color: #4f46e5;
+    --editor-bg: #f5f5f5;
+    --preview-bg: #fff;
+    font-family: 'Inter', sans-serif;
+}
