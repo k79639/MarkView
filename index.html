@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakrView</title>
+    <title>MarkView</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -120,6 +120,17 @@
                 <div id="preview" class="markdown-preview p-4 rounded fade-in" style="min-height: calc(100% - 3rem);"></div>
             </div>
         </main>
+
+        <!-- Footer -->
+        <footer class="py-2 px-6 border-t flex justify-between items-center text-sm" style="border-color: var(--border-color); background-color: var(--bg-secondary); color: var(--text-secondary);">
+            <div class="flex space-x-4">
+                <span id="word-count">Words: 0</span>
+                <span id="char-count">Characters: 0</span>
+            </div>
+            <div>
+                <span>Made with <i class="fas fa-heart" style="color: var(--accent-color);"></i> and Markdown</span>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

@@ -10,6 +10,14 @@ document.addEventListener('DOMContentLoaded', function(){
     const wordCountEl = document.getElementById('word-count');
     const charCountEl = document.getElementById('char-count');
 
+    // Initialize from localStorage
+    const savedContent = localStorage.getItem('markdownContent');
+    if (savedContent) {
+        editor.value = savedContent;
+        updatePreview();
+    }
+
+    // Theme toggler
     themeButtons.forEach(button => {
         button.addEventListener('click', function() {
             const theme = this.getAttribute('data-theme');
@@ -19,4 +27,36 @@ document.addEventListener('DOMContentLoaded', function(){
             setTimeout(() => preview.classList.remove('fade-in'), 300);
         });
     });
+    
+    // Set up marked.js
+    marked.setOptions({
+        breaks: true,
+        gfm: true,
+        smartypants: true
+    });
+    
+    // Event Listeners
+    editor.addEventListener('input', function() {
+        updatePreview();
+        saveToLocalStorage();
+        updateCounts();
+    });
+
+    // Functions
+    function updatePreview() {
+        preview.innerHTML = marked.parse(editor.value);
+    }
+    
+    function saveToLocalStorage() {
+        localStorage.setItem('markdownContent', editor.value);
+    }
+    
+    function updateCounts() {
+        const text = editor.value;
+        const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+        const charCount = text.length;
+        
+        wordCountEl.textContent = `Words: ${wordCount}`;
+        charCountEl.textContent = `Characters: ${charCount}`;
+    }
 })
