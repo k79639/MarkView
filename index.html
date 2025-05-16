@@ -11,6 +11,8 @@
 </head>
 <body class="theme-minimal transition-all" style="background-color: var(--bg-primary); color: var(--text-primary);">
     <div class="min-h-screen flex flex-col">
+
+        <!-- Header -->
         <header class="py-4 px-6 border-b" style="border-color: var(--border-color); background-color: var(--bg-secondary);">
             <div class="flex justify-between items-center">
                 <!-- Title -->
@@ -57,6 +59,66 @@
                 </div>
             </div>
         </header>
+
+        <!-- Toolbar -->
+        <div class="px-6 py-2 border-b flex flex-wrap items-center gap-2" style="border-color: var(--border-color); background-color: var(--bg-secondary);">
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="bold">
+                <i class="fas fa-bold mr-1"></i>
+                <span class="hidden md:inline">Bold</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="italic">
+                <i class="fas fa-italic mr-1"></i>
+                <span class="hidden md:inline">Italic</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="heading">
+                <i class="fas fa-heading mr-1"></i>
+                <span class="hidden md:inline">Heading</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="link">
+                <i class="fas fa-link mr-1"></i>
+                <span class="hidden md:inline">Link</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="image">
+                <i class="fas fa-image mr-1"></i>
+                <span class="hidden md:inline">Image</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="code">
+                <i class="fas fa-code mr-1"></i>
+                <span class="hidden md:inline">Code</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="quote">
+                <i class="fas fa-quote-right mr-1"></i>
+                <span class="hidden md:inline">Quote</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="list-ul">
+                <i class="fas fa-list-ul mr-1"></i>
+                <span class="hidden md:inline">List</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="list-ol">
+                <i class="fas fa-list-ol mr-1"></i>
+                <span class="hidden md:inline">Numbered</span>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+            <!-- Editor -->
+            <div class="flex-1 p-4 border-r" style="border-color: var(--border-color); background-color: var(--editor-bg);">
+                <textarea id="editor" class="w-full h-full p-4 outline-none resize-none" style="background-color: var(--editor-bg); color: var(--text-primary);" placeholder="Start writing your Markdown here..."></textarea>
+            </div>
+            
+            <!-- Preview -->
+            <div class="flex-1 p-4 overflow-auto" style="background-color: var(--preview-bg);">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold">Preview</h2>
+                    <button id="copy-btn" class="px-3 py-1 rounded flex items-center text-sm" style="background-color: var(--accent-color); color: white;">
+                        <i class="fas fa-copy mr-1"></i>
+                        <span>Copy</span>
+                    </button>
+                </div>
+                <div id="preview" class="markdown-preview p-4 rounded fade-in" style="min-height: calc(100% - 3rem);"></div>
+            </div>
+        </main>
     </div>
 </body>
 </html>
