@@ -10,12 +10,82 @@ document.addEventListener('DOMContentLoaded', function(){
     const wordCountEl = document.getElementById('word-count');
     const charCountEl = document.getElementById('char-count');
 
-    // Initialize from localStorage
-    const savedContent = localStorage.getItem('markdownContent');
-    if (savedContent) {
-        editor.value = savedContent;
-        updatePreview();
+    // Create save status indicator
+    const saveStatus = document.createElement('div');
+    saveStatus.className = 'save-status fixed bottom-4 right-4 px-3 py-1 rounded text-sm transition-opacity duration-300';
+    saveStatus.style.backgroundColor = 'var(--bg-secondary)';
+    saveStatus.style.color = 'var(--text-secondary)';
+    saveStatus.style.opacity = '0';
+    document.body.appendChild(saveStatus);
+
+    // Debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     }
+
+    // Initialize from localStorage with error handling
+    function loadFromLocalStorage() {
+        try {
+            const savedContent = localStorage.getItem('markdownContent');
+            if (savedContent) {
+                editor.value = savedContent;
+                updatePreview();
+                showSaveStatus('Content loaded from last session', 'success');
+            }
+        } catch (error) {
+            console.error('Error loading from localStorage:', error);
+            showSaveStatus('Error loading saved content', 'error');
+        }
+    }
+
+    // Enhanced save to localStorage with status indicator
+    const saveToLocalStorage = debounce(function() {
+        try {
+            localStorage.setItem('markdownContent', editor.value);
+            showSaveStatus('Changes saved', 'success');
+        } catch (error) {
+            console.error('Error saving to localStorage:', error);
+            showSaveStatus('Error saving changes', 'error');
+        }
+    }, 1000); // Debounce for 1 second
+
+    // Show save status with animation
+    function showSaveStatus(message, type = 'success') {
+        saveStatus.textContent = message;
+        saveStatus.style.backgroundColor = type === 'success' ? 'var(--bg-secondary)' : '#ef4444';
+        saveStatus.style.color = type === 'success' ? 'var(--text-secondary)' : '#ffffff';
+        saveStatus.style.opacity = '1';
+
+        // Hide the status after 2 seconds
+        setTimeout(() => {
+            saveStatus.style.opacity = '0';
+        }, 2000);
+    }
+
+    // Auto-save on input with debouncing
+    editor.addEventListener('input', function() {
+        updatePreview();
+        saveToLocalStorage();
+        updateCounts();
+    });
+
+    // Auto-save on blur
+    editor.addEventListener('blur', function() {
+        saveToLocalStorage();
+    });
+
+    // Initialize
+    loadFromLocalStorage();
+    updatePreview();
+    updateCounts();
 
     // Theme toggler
     themeButtons.forEach(button => {
@@ -36,12 +106,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
     
     // Event Listeners
-    editor.addEventListener('input', function() {
-        updatePreview();
-        saveToLocalStorage();
-        updateCounts();
-    });
-
     formatButtons.forEach(button => {
         button.addEventListener('click', function() {
             const format = this.getAttribute('data-format');
@@ -104,10 +168,6 @@ document.addEventListener('DOMContentLoaded', function(){
     // Functions
     function updatePreview() {
         preview.innerHTML = marked.parse(editor.value);
-    }
-    
-    function saveToLocalStorage() {
-        localStorage.setItem('markdownContent', editor.value);
     }
     
     function updateCounts() {
@@ -238,8 +298,4 @@ document.addEventListener('DOMContentLoaded', function(){
             }, 2000);
         });
     }
-    
-    // Initialize
-    updatePreview();
-    updateCounts();
 })
