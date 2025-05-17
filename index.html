@@ -118,6 +118,40 @@
 
         <!-- Toolbar -->
         <div class="px-6 py-2 border-b flex flex-wrap items-center gap-2" style="border-color: var(--border-color); background-color: var(--bg-secondary);">
+            <!-- Heading Dropdown -->
+            <div class="relative group" id="heading-dropdown">
+                <button class="format-btn px-2 py-1 rounded text-sm flex items-center" id="heading-btn">
+                    <i class="fas fa-heading mr-1"></i>
+                    <span class="hidden md:inline">Heading</span>
+                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                </button>
+                <div class="absolute left-0 mt-1 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 hidden" 
+                     id="heading-menu"
+                     style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); z-index: 50;">
+                    <div class="py-1">
+                        <button class="format-btn w-full text-left px-4 py-2 text-sm hover:bg-opacity-10 hover:bg-white" data-format="h1">
+                            <i class="fas fa-heading mr-2"></i>Heading 1
+                        </button>
+                        <button class="format-btn w-full text-left px-4 py-2 text-sm hover:bg-opacity-10 hover:bg-white" data-format="h2">
+                            <i class="fas fa-heading mr-2"></i>Heading 2
+                        </button>
+                        <button class="format-btn w-full text-left px-4 py-2 text-sm hover:bg-opacity-10 hover:bg-white" data-format="h3">
+                            <i class="fas fa-heading mr-2"></i>Heading 3
+                        </button>
+                        <button class="format-btn w-full text-left px-4 py-2 text-sm hover:bg-opacity-10 hover:bg-white" data-format="h4">
+                            <i class="fas fa-heading mr-2"></i>Heading 4
+                        </button>
+                        <button class="format-btn w-full text-left px-4 py-2 text-sm hover:bg-opacity-10 hover:bg-white" data-format="h5">
+                            <i class="fas fa-heading mr-2"></i>Heading 5
+                        </button>
+                        <button class="format-btn w-full text-left px-4 py-2 text-sm hover:bg-opacity-10 hover:bg-white" data-format="h6">
+                            <i class="fas fa-heading mr-2"></i>Heading 6
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basic Formatting -->
             <button class="format-btn px-2 py-1 rounded text-sm" data-format="bold">
                 <i class="fas fa-bold mr-1"></i>
                 <span class="hidden md:inline">Bold</span>
@@ -126,10 +160,12 @@
                 <i class="fas fa-italic mr-1"></i>
                 <span class="hidden md:inline">Italic</span>
             </button>
-            <button class="format-btn px-2 py-1 rounded text-sm" data-format="heading">
-                <i class="fas fa-heading mr-1"></i>
-                <span class="hidden md:inline">Heading</span>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="strikethrough">
+                <i class="fas fa-strikethrough mr-1"></i>
+                <span class="hidden md:inline">Strike</span>
             </button>
+
+            <!-- Links and Media -->
             <button class="format-btn px-2 py-1 rounded text-sm" data-format="link">
                 <i class="fas fa-link mr-1"></i>
                 <span class="hidden md:inline">Link</span>
@@ -138,14 +174,18 @@
                 <i class="fas fa-image mr-1"></i>
                 <span class="hidden md:inline">Image</span>
             </button>
+
+            <!-- Code -->
             <button class="format-btn px-2 py-1 rounded text-sm" data-format="code">
                 <i class="fas fa-code mr-1"></i>
                 <span class="hidden md:inline">Code</span>
             </button>
-            <button class="format-btn px-2 py-1 rounded text-sm" data-format="quote">
-                <i class="fas fa-quote-right mr-1"></i>
-                <span class="hidden md:inline">Quote</span>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="codeblock">
+                <i class="fas fa-file-code mr-1"></i>
+                <span class="hidden md:inline">Code Block</span>
             </button>
+
+            <!-- Lists -->
             <button class="format-btn px-2 py-1 rounded text-sm" data-format="list-ul">
                 <i class="fas fa-list-ul mr-1"></i>
                 <span class="hidden md:inline">List</span>
@@ -153,6 +193,24 @@
             <button class="format-btn px-2 py-1 rounded text-sm" data-format="list-ol">
                 <i class="fas fa-list-ol mr-1"></i>
                 <span class="hidden md:inline">Numbered</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="checklist">
+                <i class="fas fa-tasks mr-1"></i>
+                <span class="hidden md:inline">Checklist</span>
+            </button>
+
+            <!-- Block Elements -->
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="quote">
+                <i class="fas fa-quote-right mr-1"></i>
+                <span class="hidden md:inline">Quote</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="divider">
+                <i class="fas fa-minus mr-1"></i>
+                <span class="hidden md:inline">Divider</span>
+            </button>
+            <button class="format-btn px-2 py-1 rounded text-sm" data-format="table">
+                <i class="fas fa-table mr-1"></i>
+                <span class="hidden md:inline">Table</span>
             </button>
         </div>
 

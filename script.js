@@ -10,6 +10,54 @@ document.addEventListener('DOMContentLoaded', function(){
     const wordCountEl = document.getElementById('word-count');
     const charCountEl = document.getElementById('char-count');
 
+    // Heading dropdown functionality
+    const headingBtn = document.getElementById('heading-btn');
+    const headingMenu = document.getElementById('heading-menu');
+    const headingDropdown = document.getElementById('heading-dropdown');
+    let closeTimeout;
+
+    function showHeadingMenu() {
+        clearTimeout(closeTimeout);
+        headingMenu.classList.remove('hidden');
+    }
+
+    function hideHeadingMenu() {
+        closeTimeout = setTimeout(() => {
+            headingMenu.classList.add('hidden');
+        }, 200);
+    }
+
+    // Toggle menu on button click
+    headingBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (headingMenu.classList.contains('hidden')) {
+            showHeadingMenu();
+        } else {
+            hideHeadingMenu();
+        }
+    });
+
+    // Handle heading option clicks
+    headingMenu.querySelectorAll('.format-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const format = button.getAttribute('data-format');
+            applyFormatting(format);
+            headingMenu.classList.add('hidden');
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!headingDropdown.contains(e.target)) {
+            headingMenu.classList.add('hidden');
+        }
+    });
+
+    // Remove hover events for mobile compatibility
+    // headingDropdown.removeEventListener('mouseenter', showHeadingMenu);
+    // headingDropdown.removeEventListener('mouseleave', hideHeadingMenu);
+
     // Create save status indicator
     const saveStatus = document.createElement('div');
     saveStatus.className = 'save-status fixed bottom-4 right-4 px-3 py-1 rounded text-sm transition-opacity duration-300';
@@ -55,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function(){
             console.error('Error saving to localStorage:', error);
             showSaveStatus('Error saving changes', 'error');
         }
-    }, 1000); // Debounce for 1 second
+    }, 1000);
 
     // Show save status with animation
     function showSaveStatus(message, type = 'success') {
@@ -64,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function(){
         saveStatus.style.color = type === 'success' ? 'var(--text-secondary)' : '#ffffff';
         saveStatus.style.opacity = '1';
 
-        // Hide the status after 2 seconds
         setTimeout(() => {
             saveStatus.style.opacity = '0';
         }, 2000);
@@ -104,13 +151,16 @@ document.addEventListener('DOMContentLoaded', function(){
         gfm: true,
         smartypants: true
     });
-    
+
     // Event Listeners
     formatButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const format = this.getAttribute('data-format');
-            applyFormatting(format);
-        });
+        // Skip heading buttons as they are handled separately
+        if (!button.closest('#heading-menu')) {
+            button.addEventListener('click', function() {
+                const format = this.getAttribute('data-format');
+                applyFormatting(format);
+            });
+        }
     });
 
     downloadBtn.addEventListener('click', downloadMarkdown);
@@ -180,11 +230,40 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function applyFormatting(format) {
+        if (!format) return;
+        
         const startPos = editor.selectionStart;
         const endPos = editor.selectionEnd;
         const selectedText = editor.value.substring(startPos, endPos);
         let before = '', after = '', newCursorPos = 0;
         
+        // Handle headings with a more maintainable approach
+        if (format.startsWith('h')) {
+            const level = parseInt(format.charAt(1));
+            if (level >= 1 && level <= 6) {
+                // Remove any existing heading markers
+                const cleanText = selectedText.replace(/^#{1,6}\s/, '');
+                before = '#'.repeat(level) + ' ';
+                newCursorPos = startPos + level + 1;
+                
+                // Update the text
+                editor.value = editor.value.substring(0, startPos) + before + cleanText + editor.value.substring(endPos);
+                
+                // Set the cursor position
+                if (cleanText) {
+                    editor.setSelectionRange(newCursorPos, newCursorPos + cleanText.length);
+                } else {
+                    editor.setSelectionRange(newCursorPos, newCursorPos);
+                }
+                
+                editor.focus();
+                updatePreview();
+                saveToLocalStorage();
+                return;
+            }
+        }
+        
+        // Handle other formatting options
         switch(format) {
             case 'bold':
                 before = '**';
@@ -196,9 +275,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 after = '*';
                 newCursorPos = startPos + 1;
                 break;
-            case 'heading':
-                before = '## ';
-                newCursorPos = startPos + 3;
+            case 'strikethrough':
+                before = '~~';
+                after = '~~';
+                newCursorPos = startPos + 2;
                 break;
             case 'link':
                 before = '[';
@@ -211,15 +291,14 @@ document.addEventListener('DOMContentLoaded', function(){
                 newCursorPos = startPos + 2;
                 break;
             case 'code':
-                if (selectedText.includes('\n')) {
-                    before = '```\n';
-                    after = '\n```';
-                    newCursorPos = startPos + 4;
-                } else {
-                    before = '`';
-                    after = '`';
-                    newCursorPos = startPos + 1;
-                }
+                before = '`';
+                after = '`';
+                newCursorPos = startPos + 1;
+                break;
+            case 'codeblock':
+                before = '```\n';
+                after = '\n```';
+                newCursorPos = startPos + 4;
                 break;
             case 'quote':
                 if (selectedText.includes('\n')) {
@@ -248,9 +327,28 @@ document.addEventListener('DOMContentLoaded', function(){
                     newCursorPos = startPos + 3;
                 }
                 break;
+            case 'checklist':
+                if (selectedText.includes('\n')) {
+                    before = '- [ ] ';
+                    after = selectedText.replace(/\n/g, '\n- [ ] ');
+                } else {
+                    before = '- [ ] ';
+                    newCursorPos = startPos + 6;
+                }
+                break;
+            case 'divider':
+                before = '\n---\n';
+                newCursorPos = startPos + 5;
+                break;
+            case 'table':
+                before = '\n| Header 1 | Header 2 | Header 3 |\n|----------|----------|----------|\n| Cell 1   | Cell 2   | Cell 3   |\n';
+                newCursorPos = startPos + before.length;
+                break;
+            default:
+                return;
         }
         
-        // Update the text
+        // Update the text for non-heading formats
         editor.value = editor.value.substring(0, startPos) + before + selectedText + after + editor.value.substring(endPos);
         
         // Set the cursor position
