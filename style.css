@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Comic+Neue:wght@700&display=swap');
 
-/* Transition effects */
+/* Base transitions */
 .transition-all {
     transition: all 0.3s ease;
 }
 
-/* Themes */
+/* Theme variables and styles */
 .theme-neon {
     --bg-primary: #000;
     --bg-secondary: #111;
@@ -54,7 +54,7 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Tooltip */
+/* Tooltip styles */
 .tooltip {
     position: relative;
     display: inline-block;
@@ -79,9 +79,9 @@
     font-size: 12px;
     white-space: nowrap;
     pointer-events: none;
+    will-change: opacity, transform;
 }
 
-/* Add arrow to tooltip */
 .tooltip .tooltip-text::before {
     content: "";
     position: absolute;
@@ -98,26 +98,19 @@
     opacity: 1;
 }
 
-/* Markdown preview styling */
+/* Markdown preview styles */
 .markdown-preview {
     overflow-x: auto;
     max-width: 100%;
     white-space: pre-wrap;
     line-height: 1.5;
     padding: 0.5em;
+    contain: content;
 }
 
-.markdown-preview h1 {
-    font-size: 2em;
-    margin: 0.5em 0;
-    font-weight: bold;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.3em;
-    white-space: normal;
-}
-
+/* Headers */
+.markdown-preview h1,
 .markdown-preview h2 {
-    font-size: 1.5em;
     margin: 0.5em 0;
     font-weight: bold;
     border-bottom: 1px solid var(--border-color);
@@ -125,36 +118,26 @@
     white-space: normal;
 }
 
-.markdown-preview h3 {
-    font-size: 1.25em;
+.markdown-preview h1 { font-size: 2em; }
+.markdown-preview h2 { font-size: 1.5em; }
+.markdown-preview h3 { font-size: 1.25em; }
+.markdown-preview h4 { font-size: 1.1em; }
+.markdown-preview h5 { font-size: 1em; }
+.markdown-preview h6 { font-size: 0.9em; }
+
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
     margin: 0.5em 0;
     font-weight: bold;
     white-space: normal;
 }
 
-.markdown-preview h4 {
-    font-size: 1.1em;
-    margin: 0.5em 0;
-    font-weight: 600;
-    white-space: normal;
-}
+.markdown-preview h5 { letter-spacing: 0.5px; }
+.markdown-preview h6 { color: var(--text-secondary); }
 
-.markdown-preview h5 {
-    font-size: 1em;
-    margin: 0.5em 0;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    white-space: normal;
-}
-
-.markdown-preview h6 {
-    font-size: 0.9em;
-    margin: 0.5em 0;
-    font-weight: 600;
-    color: var(--text-secondary);
-    white-space: normal;
-}
-
+/* Text elements */
 .markdown-preview p {
     margin: 0.5em 0;
     white-space: pre-wrap;
@@ -166,31 +149,24 @@
     text-decoration: underline;
 }
 
-.markdown-preview ul {
-    margin: 0.5em 0;
-    padding-left: 2em;
-    list-style-type: disc;
-}
-
+/* Lists */
+.markdown-preview ul,
 .markdown-preview ol {
     margin: 0.5em 0;
     padding-left: 2em;
-    list-style-type: decimal;
 }
 
-.markdown-preview ol ol {
-    list-style-type: lower-roman;
-}
-
-.markdown-preview ol ol ol {
-    list-style-type: lower-alpha;
-}
+.markdown-preview ul { list-style-type: disc; }
+.markdown-preview ol { list-style-type: decimal; }
+.markdown-preview ol ol { list-style-type: lower-roman; }
+.markdown-preview ol ol ol { list-style-type: lower-alpha; }
 
 .markdown-preview li {
     margin: 0.25em 0;
     display: list-item;
 }
 
+/* Code blocks and inline code */
 .markdown-preview code {
     background-color: var(--bg-secondary);
     padding: 0.2em 0.4em;
@@ -216,6 +192,7 @@
     position: relative;
     border: 1px solid #333;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    contain: content;
 }
 
 .markdown-preview pre code {
@@ -230,6 +207,7 @@
     box-shadow: none;
 }
 
+/* Copy button styles */
 .markdown-preview .copy-button {
     position: absolute;
     top: 0.75em;
@@ -245,6 +223,7 @@
     font-size: 0.85em;
     line-height: 1;
     backdrop-filter: blur(4px);
+    will-change: opacity, transform;
 }
 
 .markdown-preview pre:hover .copy-button,
@@ -265,7 +244,7 @@
     border-color: #10B981;
 }
 
-/* Adjust button position for inline code */
+/* Inline code copy button */
 .markdown-preview code .copy-button {
     top: 50%;
     transform: translateY(-50%);
@@ -280,7 +259,7 @@
     transform: translateY(-50%) translateY(-1px);
 }
 
-/* Theme-specific code block colors */
+/* Theme-specific code block styles */
 .theme-light .markdown-preview pre {
     background-color: #f8f9fa;
     border-color: #e9ecef;
@@ -308,6 +287,7 @@
     color: #856404;
 }
 
+/* Block elements */
 .markdown-preview blockquote {
     margin: 0.5em 0;
     padding-left: 1em;
@@ -331,6 +311,7 @@
     height: 3px;
 }
 
+/* Tables */
 .markdown-preview table {
     margin: 0.5em 0;
     border-collapse: collapse;
@@ -357,7 +338,7 @@
     background-color: var(--bg-primary);
 }
 
-/* Animation for theme switching */
+/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -367,11 +348,12 @@
     animation: fadeIn 0.3s ease-in;
 }
 
-/* Mobile Menu Styles */
+/* Mobile menu styles */
 #mobile-menu {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    will-change: opacity, visibility;
 }
 
 #mobile-menu.active {
@@ -382,6 +364,7 @@
 #mobile-menu > div {
     transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
 }
 
 #mobile-menu.active > div {
@@ -401,4 +384,38 @@
 /* Prevent body scroll when mobile menu is open */
 body.menu-open {
     overflow: hidden;
+}
+
+/* Footer styles */
+footer {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+footer span {
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+footer i {
+    transition: transform 0.2s ease;
+}
+
+footer i.fa-heart:hover {
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    footer span {
+        font-size: 0.8125rem;
+    }
+    
+    footer i {
+        font-size: 0.875rem;
+    }
 }
