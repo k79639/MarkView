@@ -570,6 +570,10 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
+    // Track auto-inserted list markers
+    let lastAutoInsertedLine = -1;
+    let lastAutoInsertedMarker = '';
+
     // Handle tab key in editor
     editor.addEventListener('keydown', function(e) {
         if (e.key === 'Tab') {
@@ -586,6 +590,90 @@ document.addEventListener('DOMContentLoaded', function(){
             
             // Update preview
             updatePreview();
+        } else if (e.key === 'Enter') {
+            // Get the current line and its content
+            const text = this.value;
+            const cursorPos = this.selectionStart;
+            const textBeforeCursor = text.substring(0, cursorPos);
+            const lines = textBeforeCursor.split('\n');
+            const currentLine = lines[lines.length - 1];
+            
+            // Check if we're in a list
+            const listMatch = currentLine.match(/^(\s*)([-*]|\d+\.|\d+\))\s+(.*)$/);
+            const checklistMatch = currentLine.match(/^(\s*)([-*])\s+\[([ x])\]\s+(.*)$/);
+            
+            if (listMatch || checklistMatch) {
+                e.preventDefault(); // Prevent default enter behavior
+                
+                const match = listMatch || checklistMatch;
+                const indent = match[1]; // Current indentation
+                const marker = match[2]; // List marker (-, *, 1., etc.)
+                const content = match[4] || match[3] || ''; // List item content
+                
+                // If the current line is empty (just the marker), don't continue the list
+                if (content.trim() === '') {
+                    this.value = text.substring(0, cursorPos) + '\n' + text.substring(cursorPos);
+                    this.selectionStart = this.selectionEnd = cursorPos + 1;
+                    updatePreview();
+                    return;
+                }
+                
+                let newMarker;
+                if (marker === '-' || marker === '*') {
+                    // Unordered list or checklist
+                    newMarker = checklistMatch ? `${marker} [ ]` : marker;
+                } else {
+                    // Numbered list - increment the number
+                    const num = parseInt(marker);
+                    newMarker = `${num + 1}.`;
+                }
+                
+                // Insert the new list item
+                const newLine = `\n${indent}${newMarker} `;
+                this.value = text.substring(0, cursorPos) + newLine + text.substring(cursorPos);
+                
+                // Track the auto-inserted marker
+                lastAutoInsertedLine = lines.length;
+                lastAutoInsertedMarker = newMarker;
+                
+                // Set cursor position after the new marker
+                this.selectionStart = this.selectionEnd = cursorPos + newLine.length;
+                
+                // Update preview
+                updatePreview();
+            }
+        } else if (e.key === 'Backspace') {
+            // Get the current line and its content
+            const text = this.value;
+            const cursorPos = this.selectionStart;
+            const textBeforeCursor = text.substring(0, cursorPos);
+            const lines = textBeforeCursor.split('\n');
+            const currentLine = lines[lines.length - 1];
+            
+            // Check if we're at the start of a list item
+            const listMatch = currentLine.match(/^(\s*)([-*]|\d+\.|\d+\))\s+$/);
+            const checklistMatch = currentLine.match(/^(\s*)([-*])\s+\[([ x])\]\s+$/);
+            
+            if ((listMatch || checklistMatch) && cursorPos === textBeforeCursor.length) {
+                const match = listMatch || checklistMatch;
+                const indent = match[1];
+                const marker = match[2];
+                
+                // Calculate marker length including trailing space
+                const markerLength = marker.length + (checklistMatch ? 4 : 0) + 1;
+                
+                // If we're at the end of the marker
+                if (currentLine.length === indent.length + markerLength) {
+                    e.preventDefault();
+                    
+                    // Remove the marker and trailing space
+                    this.value = text.substring(0, cursorPos - markerLength) + text.substring(cursorPos);
+                    this.selectionStart = this.selectionEnd = cursorPos - markerLength;
+                    
+                    // Update preview
+                    updatePreview();
+                }
+            }
         }
     });
 })
