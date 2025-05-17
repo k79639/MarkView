@@ -121,6 +121,26 @@
     font-weight: bold;
 }
 
+.markdown-preview h4 {
+    font-size: 1.1em;
+    margin: 1em 0;
+    font-weight: 600;
+}
+
+.markdown-preview h5 {
+    font-size: 1em;
+    margin: 1.1em 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.markdown-preview h6 {
+    font-size: 0.9em;
+    margin: 1.2em 0;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
 .markdown-preview p {
     margin: 1em 0;
 }
@@ -148,7 +168,7 @@
 }
 
 .markdown-preview code {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.652);
     padding: 0.2em 0.4em;
     border-radius: 3px;
     font-family: 'Source Code Pro', monospace;
@@ -171,7 +191,46 @@
 
 .markdown-preview img {
     max-width: 100%;
+    height: auto;
     border-radius: 4px;
+    display: block;
+    margin: 1em auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styles */
+.markdown-preview table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    overflow-x: auto;
+    display: block;
+}
+
+.markdown-preview table th,
+.markdown-preview table td {
+    padding: 0.75em;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.markdown-preview table th {
+    background-color: var(--bg-secondary);
+    font-weight: 600;
+}
+
+.markdown-preview table tr:nth-child(even) {
+    background-color: var(--bg-secondary);
+}
+
+.markdown-preview table tr:hover {
+    background-color: var(--bg-primary);
+}
+
+/* Ensure tables are responsive */
+.markdown-preview {
+    overflow-x: auto;
+    max-width: 100%;
 }
 
 /* Animation for theme switching */
