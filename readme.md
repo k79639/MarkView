@@ -8,16 +8,16 @@ MarkView combines real-time preview, smart formatting tools, automatic list hand
 
 ---
 
-## ✨ Features
+## Features
 
-### ⚙️ Core Functionality
+### Core Functionality
 - Real-time Markdown preview with [marked.js](https://marked.js.org/)
 - Auto-save to localStorage
 - Download notes as `.md` files
 - Copy to clipboard
 - Clear editor with confirmation
 
-### 🧠 Smart List Handling
+### Smart List Handling
 - Auto-continues:
   - Unordered lists (`-`, `*`)
   - Numbered lists (`1.`, `2.`…)
@@ -25,14 +25,14 @@ MarkView combines real-time preview, smart formatting tools, automatic list hand
 - Backspace instantly removes list prefixes
 - Proper indentation handling
 
-### 🎨 Themes
+### Themes
 Each theme includes styled code blocks and tooltips:
 - **Minimal Dark** – clean and professional
 - **Neon Hacker** – Matrix-inspired, green-on-black
 - **Funny Chaotic** – bold, vibrant color palette
 - **Soft Light** – gentle tones for reading comfort
 
-### 🖋 Rich Markdown Support
+### Rich Markdown Support
 - Headings (H1–H6)
 - Bold, italic, strikethrough
 - Links and images
@@ -40,7 +40,7 @@ Each theme includes styled code blocks and tooltips:
 - Inline & multiline code
 - Horizontal rules
 
-### 📱 User Experience
+### User Experience
 - Word and character counters
 - Fully responsive layout
 - Mobile-friendly toolbar
@@ -49,7 +49,7 @@ Each theme includes styled code blocks and tooltips:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: HTML5, Tailwind CSS, Vanilla JavaScript
 - **Markdown Parsing**: marked.js
@@ -58,7 +58,7 @@ Each theme includes styled code blocks and tooltips:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 To run it locally:
 
@@ -67,3 +67,6 @@ git clone https://github.com/karan79639/MarkView.git
 cd MarkView
 open index.html
 ```
+
+## ScreenShot
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/fd614f85-57dc-4ca2-a448-98cf7d880afa" />
