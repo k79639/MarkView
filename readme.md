@@ -68,5 +68,5 @@ cd MarkView
 open index.html
 ```
 
-## ScreenShot
+## Screenshot:
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/fd614f85-57dc-4ca2-a448-98cf7d880afa" />
