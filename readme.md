@@ -1,79 +1,69 @@
-# MarkView - Modern Markdown Editor
+# 📝 MarkView – Modern Markdown Editor
 
-A sleek, feature-rich Markdown editor built in 48 hours for the CodeCircuit Hackathon by Outlier AI. Experience real-time preview, smart list handling, and beautiful themes in a responsive interface.
+A sleek, feature-rich Markdown editor built in 48 hours for the **CodeCircuit Hackathon** by Outlier AI.
 
+MarkView combines real-time preview, smart formatting tools, automatic list handling, and multiple dynamic themes — all wrapped in a responsive, modern UI.
+
+🔗 **Live Demo**: [MarkView on GitHub Pages](https://k79639.github.io/MarkView/)
+
+---
 
 ## ✨ Features
 
-### Core Functionality
+### ⚙️ Core Functionality
 - Real-time Markdown preview with [marked.js](https://marked.js.org/)
-- Auto-saving to localStorage
-- Download notes as .md files
-- Copy content to clipboard
+- Auto-save to localStorage
+- Download notes as `.md` files
+- Copy to clipboard
 - Clear editor with confirmation
 
-### Smart List Handling
-- Auto-continues lists when pressing Enter
-  - Unordered lists (`-` or `*`)
-  - Numbered lists (`1.`, `2.`, etc.)
+### 🧠 Smart List Handling
+- Auto-continues:
+  - Unordered lists (`-`, `*`)
+  - Numbered lists (`1.`, `2.`…)
   - Checklists (`- [ ]`)
-- Smart backspace behavior for list markers
-- Maintains proper indentation
+- Backspace instantly removes list prefixes
+- Proper indentation handling
 
-### Beautiful Themes
-- **Minimal Dark**: Clean, professional dark theme
-- **Neon Hacker**: Matrix-inspired green-on-black
-- **Funny Chaotic**: Playful yellow and purple
-- **Soft Light**: Easy-on-the-eyes light theme
-- Each theme includes custom styling for code blocks
+### 🎨 Themes
+Each theme includes styled code blocks and tooltips:
+- **Minimal Dark** – clean and professional
+- **Neon Hacker** – Matrix-inspired, green-on-black
+- **Funny Chaotic** – bold, vibrant color palette
+- **Soft Light** – gentle tones for reading comfort
 
-### Rich Formatting
-- Headings (H1-H6)
-- Text formatting (bold, italic, strikethrough)
+### 🖋 Rich Markdown Support
+- Headings (H1–H6)
+- Bold, italic, strikethrough
 - Links and images
-- Code blocks with syntax highlighting
-- Inline code with copy button
-- Blockquotes
-- Tables
+- Blockquotes and tables
+- Inline & multiline code
 - Horizontal rules
 
-### User Experience
+### 📱 User Experience
 - Word and character counters
-- Responsive design for all devices
+- Fully responsive layout
 - Mobile-friendly toolbar
-- Smooth animations and transitions
-- Tooltips for better discoverability
-- Modern scrollbar styling
+- Smooth transitions
+- Accessible tooltips and scrollbars
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**
-  - HTML5
-  - Tailwind CSS
-  - Vanilla JavaScript
-  - Marked.js for Markdown parsing
-  - Font Awesome icons
+- **Frontend**: HTML5, Tailwind CSS, Vanilla JavaScript
+- **Markdown Parsing**: marked.js
+- **Icons**: Font Awesome
+- **Deployment**: GitHub Pages
 
-- **Deployment**
-  - GitHub Pages
+---
 
 ## 🚀 Getting Started
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/karan79639/MarkView.git
-   ```
+To run it locally:
 
-2. Navigate to the project directory:
-   ```bash
-   cd MarkView
-   ```
-
-3. Open `index.html` in your browser or use a local server:
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx serve
-   ```
+```bash
+git clone https://github.com/karan79639/MarkView.git
+cd MarkView
+open index.html
+```
