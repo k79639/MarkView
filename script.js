@@ -53,6 +53,54 @@ document.addEventListener('DOMContentLoaded', function(){
     clearBtn.addEventListener('click', clearEditor);
     copyBtn.addEventListener('click', copyPreview);
 
+    // Mobile Menu Functionality
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu = document.getElementById('close-menu');
+    const mobileMenuContent = mobileMenu.querySelector('div');
+    const mobileDownloadBtn = document.getElementById('mobile-download-btn');
+    const mobileClearBtn = document.getElementById('mobile-clear-btn');
+
+    function openMobileMenu() {
+        mobileMenu.style.display = 'block';
+        // Force a reflow
+        mobileMenu.offsetHeight;
+        mobileMenu.classList.add('active');
+        document.body.classList.add('menu-open');
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        // Wait for the animation to complete before hiding the menu
+        setTimeout(() => {
+            if (!mobileMenu.classList.contains('active')) {
+                mobileMenu.style.display = 'none';
+            }
+        }, 300); // Match this with the CSS transition duration
+    }
+
+    hamburgerMenu.addEventListener('click', openMobileMenu);
+    closeMenu.addEventListener('click', closeMobileMenu);
+
+    // Close menu when clicking outside
+    mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+            closeMobileMenu();
+        }
+    });
+
+    // Sync mobile buttons with desktop buttons
+    mobileDownloadBtn.addEventListener('click', () => {
+        document.getElementById('download-btn').click();
+        closeMobileMenu();
+    });
+
+    mobileClearBtn.addEventListener('click', () => {
+        document.getElementById('clear-btn').click();
+        closeMobileMenu();
+    });
+
     // Functions
     function updatePreview() {
         preview.innerHTML = marked.parse(editor.value);

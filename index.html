@@ -22,10 +22,16 @@
                     MARKVIEW
                 </h1>
 
-                <div class="flex items-center space-x-4">
+                <!-- Hamburger Menu Button (Mobile Only) -->
+                <button id="hamburger-menu" class="md:hidden text-2xl" style="color: var(--text-primary);">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-4">
                     <!-- Theme Selectors -->
                     <div class="flex items-center space-x-2">
-                        <span class="text-sm hidden md:inline" style="color: var(--text-secondary);">Themes:</span>
+                        <span class="text-sm" style="color: var(--text-secondary);">Themes:</span>
                         <div class="flex space-x-6">
                             <button class="tooltip theme-btn" data-theme="neon">
                                 <i class="fas fa-laptop-code text-lg"></i>
@@ -50,12 +56,61 @@
                     <div class="flex space-x-2">
                         <button id="download-btn" class="px-3 py-1 rounded flex items-center text-sm" style="background-color: var(--accent-color); color: white;">
                             <i class="fas fa-download mr-1"></i>
-                            <span class="hidden md:inline">Download</span>
+                            <span>Download</span>
                         </button>
                         <button id="clear-btn" class="px-3 py-1 rounded flex items-center text-sm" style="border: 1px solid var(--border-color);">
                             <i class="fas fa-trash-alt mr-1"></i>
-                            <span class="hidden md:inline">Clear</span>
+                            <span>Clear</span>
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+                <div class="absolute right-0 top-0 h-full w-64 transform translate-x-full transition-transform duration-300 ease-in-out" style="background-color: var(--bg-secondary);">
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-bold">Menu</h2>
+                            <button id="close-menu" class="text-2xl" style="color: var(--text-primary);">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Theme Selectors -->
+                        <div class="mb-6">
+                            <h3 class="text-sm mb-3" style="color: var(--text-secondary);">Themes</h3>
+                            <div class="flex flex-col space-y-3">
+                                <button class="theme-btn flex items-center space-x-2" data-theme="neon">
+                                    <i class="fas fa-laptop-code"></i>
+                                    <span>Neon Hacker</span>
+                                </button>
+                                <button class="theme-btn flex items-center space-x-2" data-theme="minimal">
+                                    <i class="fas fa-moon"></i>
+                                    <span>Minimal Dark</span>
+                                </button>
+                                <button class="theme-btn flex items-center space-x-2" data-theme="funny">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>Funny Chaotic</span>
+                                </button>
+                                <button class="theme-btn flex items-center space-x-2" data-theme="light">
+                                    <i class="fas fa-sun"></i>
+                                    <span>Soft Light</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col space-y-3">
+                            <button id="mobile-download-btn" class="w-full px-3 py-2 rounded flex items-center justify-center text-sm" style="background-color: var(--accent-color); color: white;">
+                                <i class="fas fa-download mr-2"></i>
+                                <span>Download</span>
+                            </button>
+                            <button id="mobile-clear-btn" class="w-full px-3 py-2 rounded flex items-center justify-center text-sm" style="border: 1px solid var(--border-color);">
+                                <i class="fas fa-trash-alt mr-2"></i>
+                                <span>Clear</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
