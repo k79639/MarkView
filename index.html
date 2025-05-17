@@ -217,20 +217,20 @@
         <!-- Main Content -->
         <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
             <!-- Editor -->
-            <div class="flex-1 p-4 border-r" style="border-color: var(--border-color); background-color: var(--editor-bg);">
+            <div class="editor-container p-4 border-r" style="border-color: var(--border-color); background-color: var(--editor-bg);">
                 <textarea id="editor" class="w-full h-full p-4 outline-none resize-none" style="background-color: var(--editor-bg); color: var(--text-primary);" placeholder="Start writing your Markdown here..."></textarea>
             </div>
             
             <!-- Preview -->
-            <div class="flex-1 p-4 overflow-auto" style="background-color: var(--preview-bg);">
-                <div class="flex justify-between items-center mb-4">
+            <div class="preview-container p-4" style="background-color: var(--preview-bg);">
+                <div class="preview-header flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold">Preview</h2>
                     <button id="copy-btn" class="px-3 py-1 rounded flex items-center text-sm" style="background-color: var(--accent-color); color: white;">
                         <i class="fas fa-copy mr-1"></i>
                         <span>Copy</span>
                     </button>
                 </div>
-                <div id="preview" class="markdown-preview p-4 rounded fade-in" style="min-height: calc(100% - 3rem);"></div>
+                <div id="preview" class="markdown-preview p-4 rounded fade-in"></div>
             </div>
         </main>
 

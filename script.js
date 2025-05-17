@@ -1,4 +1,111 @@
 document.addEventListener('DOMContentLoaded', function(){
+    // Add styles for scrollable sections
+    const style = document.createElement('style');
+    style.textContent = `
+        .min-h-screen {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main.flex-1 {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            main.flex-1 {
+                flex-direction: row;
+            }
+        }
+
+        .editor-container, .preview-container {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #editor {
+            flex: 1;
+            min-height: 0;
+            padding: 1rem;
+            resize: none;
+            border: none;
+            outline: none;
+            background-color: var(--editor-bg);
+            color: var(--text-primary);
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .preview-header {
+            flex-shrink: 0;
+        }
+
+        #preview {
+            flex: 1;
+            min-height: 0;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: var(--preview-bg);
+            color: var(--text-primary);
+        }
+
+        /* Modern Scrollbar Styling */
+        #editor::-webkit-scrollbar, #preview::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        #editor::-webkit-scrollbar-track, #preview::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 3px;
+        }
+
+        #editor::-webkit-scrollbar-thumb, #preview::-webkit-scrollbar-thumb {
+            background: var(--text-secondary);
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        #editor::-webkit-scrollbar-thumb:hover, #preview::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        /* Firefox Scrollbar Styling */
+        #editor, #preview {
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-secondary) transparent;
+        }
+
+        /* Hide scrollbar when not in use */
+        #editor::-webkit-scrollbar-thumb:vertical:inactive,
+        #preview::-webkit-scrollbar-thumb:vertical:inactive {
+            background: transparent;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Function to maintain scrolling behavior
+    function maintainScrolling() {
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        
+        if (editor && preview) {
+            editor.style.height = '100%';
+            preview.style.height = '100%';
+        }
+    }
+
+    // Call maintainScrolling initially and after content changes
+    maintainScrolling();
+    const observer = new MutationObserver(maintainScrolling);
+    observer.observe(document.body, { childList: true, subtree: true });
+
     // DOM Elements
     const editor = document.getElementById('editor');
     const preview = document.getElementById('preview');
@@ -117,6 +224,11 @@ document.addEventListener('DOMContentLoaded', function(){
         }, 2000);
     }
 
+    // Test the save status on load
+    setTimeout(() => {
+        showSaveStatus('Ready to edit', 'success');
+    }, 500);
+
     // Auto-save on input with debouncing
     editor.addEventListener('input', function() {
         updatePreview();
@@ -145,11 +257,14 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     });
     
-    // Set up marked.js
+    // Set up marked.js with proper line break handling
     marked.setOptions({
         breaks: true,
         gfm: true,
-        smartypants: true
+        smartypants: true,
+        headerIds: false,
+        mangle: false,
+        pedantic: false
     });
 
     // Event Listeners
@@ -216,8 +331,66 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
     // Functions
+    // Function to sync preview scroll position with editor
+    function syncPreviewScroll() {
+        const cursorPosition = editor.selectionStart;
+        const textBeforeCursor = editor.value.substring(0, cursorPosition);
+        const totalText = editor.value;
+        const relativePosition = textBeforeCursor.length / totalText.length;
+        
+        const targetScrollTop = relativePosition * (preview.scrollHeight - preview.clientHeight);
+        preview.scrollTop = targetScrollTop;
+    }
+
+    // Function to update preview with proper line break handling
     function updatePreview() {
-        preview.innerHTML = marked.parse(editor.value);
+        const content = editor.value;
+        
+        // First parse the markdown
+        let htmlContent = marked.parse(content);
+        
+        // Then replace newlines with <br> tags in the HTML, but only for single newlines
+        // This preserves the original spacing while preventing extra gaps
+        htmlContent = htmlContent.replace(/([^>])\n([^<])/g, '$1<br>$2');
+        
+        // Remove any extra spaces before and after elements
+        htmlContent = htmlContent.replace(/>\s+</g, '><');
+        
+        // Update preview
+        preview.innerHTML = htmlContent;
+        
+        // Add copy buttons to code blocks and inline code
+        preview.querySelectorAll('pre, code:not(pre code)').forEach(element => {
+            if (!element.querySelector('.copy-button')) {
+                const button = document.createElement('button');
+                button.className = 'copy-button';
+                button.innerHTML = '<i class="fas fa-copy"></i>';
+                button.title = 'Copy code';
+                
+                button.addEventListener('click', () => {
+                    const code = element.tagName.toLowerCase() === 'pre' 
+                        ? element.querySelector('code').textContent 
+                        : element.textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        button.innerHTML = '<i class="fas fa-check"></i>';
+                        button.classList.add('copied');
+                        setTimeout(() => {
+                            button.innerHTML = '<i class="fas fa-copy"></i>';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    });
+                });
+                
+                element.style.position = 'relative';
+                element.appendChild(button);
+            }
+        });
+        
+        // Ensure preview has the markdown-preview class
+        preview.className = 'markdown-preview';
+        
+        // Sync scroll position
+        syncPreviewScroll();
     }
     
     function updateCounts() {
@@ -396,4 +569,23 @@ document.addEventListener('DOMContentLoaded', function(){
             }, 2000);
         });
     }
+
+    // Handle tab key in editor
+    editor.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            e.preventDefault(); // Prevent default tab behavior
+            
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+            
+            // Insert tab at cursor position
+            this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
+            
+            // Move cursor after the inserted tab
+            this.selectionStart = this.selectionEnd = start + 4;
+            
+            // Update preview
+            updatePreview();
+        }
+    });
 })
