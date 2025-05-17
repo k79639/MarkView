@@ -1,6 +1,6 @@
 # 📝 MarkView – Modern Markdown Editor
 
-A sleek, feature-rich Markdown editor built in 48 hours for the **CodeCircuit Hackathon** by Outlier AI.
+A sleek, feature-rich Markdown editor built for the **CodeCircuit Hackathon**.
 
 MarkView combines real-time preview, smart formatting tools, automatic list handling, and multiple dynamic themes — all wrapped in a responsive, modern UI.
 
