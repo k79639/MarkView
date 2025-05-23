@@ -29,7 +29,7 @@ MarkView combines real-time preview, smart formatting tools, automatic list hand
 Each theme includes styled code blocks and tooltips:
 - **Minimal Dark** – clean and professional
 - **Neon Hacker** – Matrix-inspired, green-on-black
-- **Funny Chaotic** – bold, vibrant color palette
+- **Funny Chaotic** – It's just funny
 - **Soft Light** – gentle tones for reading comfort
 
 ### Rich Markdown Support
